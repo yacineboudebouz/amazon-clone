@@ -1,4 +1,4 @@
-import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/core/constants/global_variables.dart';
 import 'package:amazon_clone/router.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';

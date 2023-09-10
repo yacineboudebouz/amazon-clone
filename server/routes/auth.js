@@ -16,6 +16,7 @@ authRouter.post("/api/signup", async (req, res) => {
       email,
       password,
     });
+
     user = await user.save();
     res.json({ user });
   } catch (e) {

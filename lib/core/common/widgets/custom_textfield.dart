@@ -24,7 +24,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: BorderSide(color: GlobalVariables.secondaryColor),
         ),
       ),
-      validator: (value) {},
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your ${widget.hintText}';
+        }
+        return null;
+      },
     );
   }
 }

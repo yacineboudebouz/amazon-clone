@@ -1,6 +1,7 @@
 import 'package:amazon_clone/core/common/widgets/custom_button.dart';
 import 'package:amazon_clone/core/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/core/constants/global_variables.dart';
+import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,6 +21,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+
+  void signUpUser() {
+    ref.read(authControllerProvider.notifier).signUpUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text,
+        context: context);
+  }
 
   @override
   void dispose() {
@@ -92,7 +101,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         ),
                         CustomButton(
                           text: 'Sign Up',
-                          onTap: () {},
+                          onTap: () {
+                            if (_signUpFormKey.currentState!.validate()) {
+                              signUpUser();
+                            }
+                          },
                         )
                       ],
                     ),

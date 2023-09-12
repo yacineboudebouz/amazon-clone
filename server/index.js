@@ -26,9 +26,9 @@ mongoose
   });
 
 // GET, PUT, POST, DELETE, UPDATE -> CRUD
-app.get("/", (req, res) => {
-  res.json({ hh: "Hello World" });
-});
+// app.get("/", (req, res) => {
+//   res.json({ hh: "Hello World" });
+// });
 app.listen(PORT, () => {
   console.log("connected at port " + PORT);
 });

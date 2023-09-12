@@ -14,10 +14,10 @@ void httpErrorHandle({
       onSuccess();
       break;
     case 400:
-      showSnackBar(context, jsonDecode(response.body)['msg'] + '400');
+      showSnackBar(context, jsonDecode(response.body)['msg']);
       break;
     case 500:
-      showSnackBar(context, jsonDecode(response.body)['error'] + '500');
+      showSnackBar(context, jsonDecode(response.body)['error']);
       break;
     default:
       showSnackBar(context, '${response.body}  Something went wrong!');

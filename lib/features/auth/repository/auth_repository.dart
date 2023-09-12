@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 import 'package:amazon_clone/core/constants/utils.dart';
-import 'package:amazon_clone/core/failure.dart';
+
 import 'package:amazon_clone/core/providers/api_provider.dart';
-import 'package:amazon_clone/core/type_def.dart';
+
 import 'package:amazon_clone/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
+
 import 'package:http/http.dart' as http;
 
 import '../../../core/constants/error_handling.dart';

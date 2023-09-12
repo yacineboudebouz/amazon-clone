@@ -2,8 +2,6 @@ import 'package:amazon_clone/features/auth/repository/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/constants/utils.dart';
-
 final authControllerProvider =
     StateNotifierProvider<AuthController, bool>((ref) {
   return AuthController(
@@ -32,7 +30,6 @@ class AuthController extends StateNotifier<bool> {
       password: password,
       name: name,
     );
-
     state = false;
   }
 }

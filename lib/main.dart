@@ -1,5 +1,4 @@
 import 'package:amazon_clone/core/constants/global_variables.dart';
-import 'package:amazon_clone/core/providers/shared_preferences_provider.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
 import 'package:amazon_clone/router.dart';
@@ -9,14 +8,7 @@ import 'package:routemaster/routemaster.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final container = ProviderContainer();
-
-  Future getData(ProviderContainer ref) {
-    return ref.read(authControllerProvider.notifier).getUserData();
-  }
-
-  await getData(container);
-  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -27,6 +19,18 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      Future getData(WidgetRef ref) {
+        return ref.read(authControllerProvider.notifier).getUserData();
+      }
+
+      await getData(ref);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

@@ -18,7 +18,7 @@ class SharedPreferencesProvider {
     _sharedPreferences.setString(tokenKey, token);
   }
 
-  void getToken() {
-    _sharedPreferences.get(tokenKey);
+  String getToken() {
+    return _sharedPreferences.getString(tokenKey)!;
   }
 }

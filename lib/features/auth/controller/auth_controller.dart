@@ -46,4 +46,10 @@ class AuthController extends StateNotifier<bool> {
     );
     state = false;
   }
+
+  Future getUserData() async {
+    state = true;
+    _authRepository.getUserData();
+    state = false;
+  }
 }

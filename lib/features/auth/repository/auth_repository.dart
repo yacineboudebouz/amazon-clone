@@ -5,10 +5,8 @@ import 'package:amazon_clone/core/constants/utils.dart';
 import 'package:amazon_clone/core/providers/api_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preferences_provider.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
-import 'package:amazon_clone/features/home/view/home_screen.dart';
 
 import 'package:amazon_clone/models/user.dart';
-import 'package:amazon_clone/router.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -91,5 +89,32 @@ class AuthRepository {
     } catch (e) {
       showSnackBar(context, 'Something went wrong!', Colors.red);
     }
+  }
+
+  void getUserData() async {
+    try {
+      final prefs = await _ref.read(sharedPreferencesProvider);
+      String? token = prefs.getToken();
+      if (token == null) {
+        prefs.storeToken('');
+      }
+      var tokenRes = await http.post(
+          Uri.parse('${ApiProvider.uri}/tokenIsValid'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token,
+          });
+      var response = jsonDecode(tokenRes.body);
+      if (response == true) {
+        // get user data
+        http.Response userRes = await http
+            .get(Uri.parse('${ApiProvider.uri}/'), headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token,
+        });
+        var user = _ref.read(userProvider);
+        user.setUser(userRes.body);
+      }
+    } catch (e) {}
   }
 }

@@ -3,21 +3,28 @@ import 'dart:convert';
 import 'package:amazon_clone/core/constants/utils.dart';
 
 import 'package:amazon_clone/core/providers/api_provider.dart';
+import 'package:amazon_clone/core/providers/shared_preferences_provider.dart';
+import 'package:amazon_clone/core/providers/user_provider.dart';
+import 'package:amazon_clone/features/home/view/home_screen.dart';
 
 import 'package:amazon_clone/models/user.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:amazon_clone/router.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:routemaster/routemaster.dart';
 
 import '../../../core/constants/error_handling.dart';
 
 final authRepositoryProvider = Provider((ref) {
-  return AuthRepository();
+  return AuthRepository(ref);
 });
 
 class AuthRepository {
+  final Ref _ref;
+  AuthRepository(Ref ref) : _ref = ref;
   void signUpUser({
     required BuildContext context,
     required String email,
@@ -71,14 +78,16 @@ class AuthRepository {
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8'
           });
-      print(res.body);
-
       // ignore: use_build_context_synchronously
       httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {},
-      );
+          response: res,
+          context: context,
+          onSuccess: () async {
+            final prefs = await _ref.read(sharedPreferencesProvider);
+            prefs.storeToken(jsonDecode(res.body)['token']);
+            _ref.watch(userProvider).setUser(res.body);
+            Routemaster.of(context).replace('/home');
+          });
     } catch (e) {
       showSnackBar(context, 'Something went wrong!', Colors.red);
     }

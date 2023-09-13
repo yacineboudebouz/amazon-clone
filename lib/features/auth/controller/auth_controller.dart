@@ -32,4 +32,18 @@ class AuthController extends StateNotifier<bool> {
     );
     state = false;
   }
+
+  void signInUser({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    state = true;
+    _authRepository.signInUser(
+      context: context,
+      email: email,
+      password: password,
+    );
+    state = false;
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:amazon_clone/core/constants/utils.dart';
 
 import 'package:amazon_clone/core/providers/api_provider.dart';
@@ -48,6 +50,34 @@ class AuthRepository {
               'Account created! Login with the same credentials !',
               Colors.green);
         },
+      );
+    } catch (e) {
+      showSnackBar(context, 'Something went wrong!', Colors.red);
+    }
+  }
+
+  void signInUser({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      http.Response res = await http.post(
+          Uri.parse('${ApiProvider.uri}/api/signin'),
+          body: jsonEncode({
+            'email': email,
+            'password': password,
+          }),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          });
+      print(res.body);
+
+      // ignore: use_build_context_synchronously
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {},
       );
     } catch (e) {
       showSnackBar(context, 'Something went wrong!', Colors.red);

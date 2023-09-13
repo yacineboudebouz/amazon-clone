@@ -30,6 +30,13 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         context: context);
   }
 
+  void signInUser() {
+    ref.read(authControllerProvider.notifier).signInUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        context: context);
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -139,7 +146,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         padding: const EdgeInsets.all(8),
                         color: GlobalVariables.backgroundColor,
                         child: Form(
-                          key: _signUpFormKey,
+                          key: _signInFormKey,
                           child: Column(
                             children: [
                               CustomTextField(
@@ -156,7 +163,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                               ),
                               CustomButton(
                                 text: 'Sign In',
-                                onTap: () {},
+                                onTap: () {
+                                  if (_signInFormKey.currentState!.validate()) {
+                                    signInUser();
+                                  }
+                                },
                               )
                             ],
                           ),

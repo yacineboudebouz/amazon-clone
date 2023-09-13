@@ -4,9 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
-
-  static const Named = '/home-page';
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }

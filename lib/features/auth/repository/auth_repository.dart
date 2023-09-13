@@ -1,19 +1,12 @@
 import 'dart:convert';
-
 import 'package:amazon_clone/core/constants/utils.dart';
-
 import 'package:amazon_clone/core/providers/api_provider.dart';
 import 'package:amazon_clone/core/providers/shared_preferences_provider.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
-
 import 'package:amazon_clone/models/user.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:http/http.dart' as http;
-import 'package:routemaster/routemaster.dart';
-
 import '../../../core/constants/error_handling.dart';
 
 final authRepositoryProvider = Provider((ref) {
@@ -84,17 +77,17 @@ class AuthRepository {
             final prefs = await _ref.read(sharedPreferencesProvider);
             prefs.storeToken(jsonDecode(res.body)['token']);
             _ref.watch(userProvider).setUser(res.body);
-            Routemaster.of(context).replace('/home');
           });
     } catch (e) {
       showSnackBar(context, 'Something went wrong!', Colors.red);
     }
   }
 
-  void getUserData() async {
+  void getUserData(BuildContext context) async {
     try {
       final prefs = await _ref.read(sharedPreferencesProvider);
       String? token = prefs.getToken();
+      // ignore: unnecessary_null_comparison
       if (token == null) {
         prefs.storeToken('');
       }
@@ -115,6 +108,8 @@ class AuthRepository {
         var user = _ref.read(userProvider);
         user.setUser(userRes.body);
       }
-    } catch (e) {}
+    } catch (e) {
+      // showSnackBar(context, e.toString(), Colors.red);
+    }
   }
 }

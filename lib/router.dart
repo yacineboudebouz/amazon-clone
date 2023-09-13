@@ -1,3 +1,4 @@
+import 'package:amazon_clone/core/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/features/auth/view/auth_screen.dart';
 import 'package:amazon_clone/features/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,6 @@ final loggedOutRoute = RouteMap(
 
 final loggedInRoute = RouteMap(
   routes: {
-    '/': (_) => const MaterialPage(child: HomeScreen()),
+    '/': (_) => const MaterialPage(child: BottomBar()),
   },
 );

@@ -40,6 +40,7 @@ dependencies:
   fpdart: ^1.1.0
   http: ^1.1.0
   shared_preferences: ^2.2.1
+  custom_line_indicator_bottom_navbar: ^0.0.8
  
 
 dev_dependencies:

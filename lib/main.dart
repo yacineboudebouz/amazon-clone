@@ -22,11 +22,11 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      Future getData(WidgetRef ref) {
-        return ref.read(authControllerProvider.notifier).getUserData();
+      void getData(WidgetRef ref) {
+        ref.read(authControllerProvider.notifier).getUserData(context);
       }
 
-      await getData(ref);
+      getData(ref);
     });
     super.initState();
   }

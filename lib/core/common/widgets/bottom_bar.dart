@@ -1,6 +1,6 @@
 import 'package:amazon_clone/core/constants/global_variables.dart';
+import 'package:amazon_clone/features/account/view/account_screen.dart';
 import 'package:amazon_clone/features/home/view/home_screen.dart';
-import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatefulWidget {
@@ -15,9 +15,7 @@ const List<Widget> pages = [
   Center(
     child: Text('Cart Page'),
   ),
-  Center(
-    child: Text('Person Page'),
-  )
+  AccountScreen()
 ];
 
 class _BottomBarState extends State<BottomBar> {
@@ -75,12 +73,15 @@ class _BottomBarState extends State<BottomBar> {
                     _page = 1;
                   });
                 },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  color: _page == 1
-                      ? GlobalVariables.selectedNavBarColor
-                      : GlobalVariables.unselectedNavBarColor,
-                  size: 40,
+                icon: Badge(
+                  label: const Text('2'),
+                  child: Icon(
+                    Icons.shopping_cart_outlined,
+                    color: _page == 1
+                        ? GlobalVariables.selectedNavBarColor
+                        : GlobalVariables.unselectedNavBarColor,
+                    size: 40,
+                  ),
                 ),
               ),
             ),

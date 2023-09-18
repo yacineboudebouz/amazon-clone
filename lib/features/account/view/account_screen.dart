@@ -1,6 +1,8 @@
 import 'package:amazon_clone/core/constants/global_variables.dart';
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/features/account/view/widgets/below_app_bar.dart';
+import 'package:amazon_clone/features/account/view/widgets/oreders.dart';
+import 'package:amazon_clone/features/account/view/widgets/top_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -54,7 +56,11 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
             ),
           )),
       body: Column(
-        children: [BelowAppBar(user: userName)],
+        children: [
+          BelowAppBar(user: userName),
+          const TopButtons(),
+          const Orders()
+        ],
       ),
     );
   }

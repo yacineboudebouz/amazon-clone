@@ -8,7 +8,7 @@ class Product {
   final String category;
   final double price;
   final String? id;
-  
+
   // final List<Rating>? rating;
   Product({
     required this.name,
@@ -42,7 +42,7 @@ class Product {
       images: List<String>.from(map['images']),
       category: map['category'] ?? '',
       price: map['price']?.toDouble() ?? 0.0,
-      id: map['_id'],
+      id: map['_id'] ?? '',
     );
   }
 

@@ -49,7 +49,6 @@ class AuthController extends StateNotifier<bool> {
 
   void getUserData(BuildContext context) async {
     state = true;
-
     await _authRepository.getUserData(context);
     state = false;
   }

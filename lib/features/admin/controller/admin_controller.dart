@@ -13,6 +13,10 @@ final adminControllerProvider =
   return AdminController(
       adminRepository: ref.read(adminRepositoryProvider), ref: ref);
 });
+final allProducts = FutureProvider.family((ref, BuildContext context) async {
+  final adminController = ref.read(adminControllerProvider.notifier);
+  return adminController.getAllProducts(context);
+});
 
 class AdminController extends StateNotifier<bool> {
   AdminController({required AdminRepository adminRepository, required Ref ref})
@@ -34,7 +38,7 @@ class AdminController extends StateNotifier<bool> {
     try {
       state = true;
       final cloudinary = _ref.watch(cloudinaryProvider);
-      print('1');
+
       List<String> imageUrls = [];
       for (int i = 0; i < images.length; i++) {
         CloudinaryResponse res = await cloudinary.uploadFile(
@@ -42,7 +46,7 @@ class AdminController extends StateNotifier<bool> {
         );
         imageUrls.add(res.secureUrl);
       }
-      print('2');
+
       Product product = Product(
         name: name,
         description: description,
@@ -53,10 +57,25 @@ class AdminController extends StateNotifier<bool> {
       );
       // ignore: use_build_context_synchronously
       await _adminRepository.sellProduct(context: context, product: product);
-      print('3');
+
       state = false;
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<List<Product>> getAllProducts(BuildContext context) async {
+    List<Product> products = [];
+    try {
+      products = await _adminRepository.fetchAllProducts(context);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return products;
+  }
+
+  void deleteProduct(String id, BuildContext context) async {
+    _adminRepository.deleteProduct(id, context);
+    _adminRepository.fetchAllProducts(context);
   }
 }

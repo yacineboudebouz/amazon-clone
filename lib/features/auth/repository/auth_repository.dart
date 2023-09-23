@@ -16,7 +16,7 @@ final authRepositoryProvider = Provider((ref) {
 class AuthRepository {
   final Ref _ref;
   AuthRepository(Ref ref) : _ref = ref;
-  void signUpUser({
+  Future signUpUser({
     required BuildContext context,
     required String email,
     required String password,
@@ -54,7 +54,7 @@ class AuthRepository {
     }
   }
 
-  void signInUser({
+  Future signInUser({
     required BuildContext context,
     required String email,
     required String password,
@@ -83,7 +83,7 @@ class AuthRepository {
     }
   }
 
-  void getUserData(BuildContext context) async {
+  Future getUserData(BuildContext context) async {
     try {
       final prefs = await _ref.read(sharedPreferencesProvider);
       String? token = prefs.getToken();

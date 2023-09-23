@@ -1,26 +1,43 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:amazon_clone/core/common/widgets/custom_button.dart';
 import 'package:amazon_clone/core/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/core/constants/global_variables.dart';
 import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum Auth { signIn, signUp }
 
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({
+    required this.loading,
+  });
+  final bool loading;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends ConsumerState<AuthScreen> {
+class _AuthScreenState extends ConsumerState<AuthScreen>
+    with SingleTickerProviderStateMixin {
   Auth _auth = Auth.signUp;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  // late Animation<Offset> slideAnimation;
+  // late AnimationController controller;
+
+  // @override
+  // void initState() {
+  //   controller =
+  //       AnimationController(vsync: this, duration: const Duration(seconds: 1));
+  //   slideAnimation = Tween(begin: const Offset(-1, 0), end: const Offset(0, 0))
+  //       .animate(controller);
+  //   super.initState();
+  // }
 
   void signUpUser() {
     ref.read(authControllerProvider.notifier).signUpUser(
@@ -39,7 +56,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -48,11 +64,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authControllerProvider);
     return Scaffold(
         backgroundColor: GlobalVariables.greyBackgroundCOlor,
-        body: isLoading
-            ? const CircularProgressIndicator()
+        body: widget.loading
+            ? const Center(child: CircularProgressIndicator())
             : SafeArea(
                 child: Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -43,6 +43,8 @@ dependencies:
   custom_line_indicator_bottom_navbar: ^0.0.8
   badges: ^3.1.2
   carousel_slider: ^4.2.1
+  dotted_border: ^2.0.0+3
+  file_picker: ^5.5.0
  
 
 dev_dependencies:

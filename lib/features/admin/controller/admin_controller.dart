@@ -74,8 +74,9 @@ class AdminController extends StateNotifier<bool> {
     return products;
   }
 
-  void deleteProduct(String id, BuildContext context) async {
-    _adminRepository.deleteProduct(id, context);
+  void deleteProduct(
+      String id, BuildContext context, VoidCallback onSucess) async {
+    _adminRepository.deleteProduct(id, context, onSucess);
     _adminRepository.fetchAllProducts(context);
   }
 }

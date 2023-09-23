@@ -22,17 +22,28 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ref.watch(allProducts(context)).when(
-          data: (data) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    return ProductTile(product: data[index]);
-                  },
-                  itemCount: data.length,
-                ),
-              ),
+          data: (data) => Builder(builder: (context) {
+                var products = data;
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return ProductTile(
+                        product: products[index],
+                        onSuccess: () {
+                          setState(() {
+                            products.removeAt(index);
+                          });
+                        },
+                      );
+                    },
+                    itemCount: products.length,
+                  ),
+                );
+              }),
           error: (e, tr) => Center(
                 child: Text(e.toString()),
               ),

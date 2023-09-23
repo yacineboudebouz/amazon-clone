@@ -77,7 +77,8 @@ class AdminRepository {
     return productList;
   }
 
-  void deleteProduct(String id, BuildContext context) async {
+  void deleteProduct(
+      String id, BuildContext context, VoidCallback onSuccess) async {
     final user = _ref.watch(userProvider).user;
     try {
       http.Response res = await http.delete(
@@ -94,6 +95,7 @@ class AdminRepository {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Deleted !', Colors.red);
+            onSuccess;
           });
     } catch (e) {
       showSnackBar(context, e.toString(), Colors.red);

@@ -7,8 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../models/product.dart';
 
 class ProductTile extends ConsumerWidget {
-  const ProductTile({super.key, required this.product});
+  const ProductTile(
+      {super.key, required this.product, required this.onSuccess});
   final Product product;
+  final VoidCallback onSuccess;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
@@ -31,10 +34,10 @@ class ProductTile extends ConsumerWidget {
               ),
               IconButton(
                   onPressed: () {
-                    print(product.toJson());
+                    onSuccess;
                     ref
                         .watch(adminControllerProvider.notifier)
-                        .deleteProduct(product.id!, context);
+                        .deleteProduct(product.id!, context, onSuccess);
                   },
                   icon: const Icon(Icons.delete_outline))
             ],

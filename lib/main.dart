@@ -1,6 +1,5 @@
 import 'package:amazon_clone/core/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/core/constants/global_variables.dart';
-import 'package:amazon_clone/core/loading.dart';
 
 import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/features/admin/view/admin_screen.dart';

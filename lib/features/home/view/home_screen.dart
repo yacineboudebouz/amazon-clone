@@ -1,4 +1,3 @@
-import 'package:amazon_clone/core/providers/user_provider.dart';
 import 'package:amazon_clone/features/home/view/widgets/adress_box.dart';
 import 'package:amazon_clone/features/home/view/widgets/carousel_image.dart';
 import 'package:amazon_clone/features/home/view/widgets/deal_of_the_day.dart';
@@ -17,7 +16,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userProvider).user;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),

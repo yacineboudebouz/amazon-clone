@@ -1,6 +1,6 @@
 import 'package:amazon_clone/features/account/view/widgets/single_product.dart';
 import 'package:amazon_clone/features/admin/controller/admin_controller.dart';
-import 'package:amazon_clone/features/auth/controller/auth_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

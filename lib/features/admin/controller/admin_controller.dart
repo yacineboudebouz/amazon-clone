@@ -8,8 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/providers/cloudinary_provider.dart';
 
-final adminControllerProvider =
-    StateNotifierProvider<AdminController, bool>((ref) {
+final adminControllerProvider = ChangeNotifierProvider((ref) {
   return AdminController(
       adminRepository: ref.read(adminRepositoryProvider), ref: ref);
 });
@@ -18,13 +17,15 @@ final allProducts = FutureProvider.family((ref, BuildContext context) async {
   return adminController.getAllProducts(context);
 });
 
-class AdminController extends StateNotifier<bool> {
+class AdminController extends ChangeNotifier {
   AdminController({required AdminRepository adminRepository, required Ref ref})
       : _adminRepository = adminRepository,
-        _ref = ref,
-        super(false);
+        _ref = ref;
   final AdminRepository _adminRepository;
   final Ref _ref;
+
+  List<Product> _products = [];
+  List<Product> get products => _products;
 
   void addProduct({
     required String name,
@@ -36,7 +37,6 @@ class AdminController extends StateNotifier<bool> {
     required BuildContext context,
   }) async {
     try {
-      state = true;
       final cloudinary = _ref.watch(cloudinaryProvider);
 
       List<String> imageUrls = [];
@@ -55,10 +55,12 @@ class AdminController extends StateNotifier<bool> {
         category: category,
         price: price,
       );
-      // ignore: use_build_context_synchronously
-      await _adminRepository.sellProduct(context: context, product: product);
+      if (context.mounted) {
+        await _adminRepository.sellProduct(context: context, product: product);
+      }
 
-      state = false;
+      _products.add(product);
+      notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -71,12 +73,16 @@ class AdminController extends StateNotifier<bool> {
     } catch (e) {
       debugPrint(e.toString());
     }
+    _products = products;
+    notifyListeners();
     return products;
   }
 
   void deleteProduct(
       String id, BuildContext context, VoidCallback onSucess) async {
-    _adminRepository.deleteProduct(id, context, onSucess);
-    _adminRepository.fetchAllProducts(context);
+    await _adminRepository.deleteProduct(id, context, onSucess);
+    await _adminRepository.fetchAllProducts(context);
+    _products.removeWhere((element) => element.id == id);
+    notifyListeners();
   }
 }

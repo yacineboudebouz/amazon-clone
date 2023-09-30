@@ -38,19 +38,22 @@ class AuthRepository {
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8'
           });
-      // ignore: use_build_context_synchronously
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(
-              context,
-              'Account created! Login with the same credentials !',
-              Colors.green);
-        },
-      );
+      if (context.mounted) {
+        httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            showSnackBar(
+                context,
+                'Account created! Login with the same credentials !',
+                Colors.green);
+          },
+        );
+      }
     } catch (e) {
-      showSnackBar(context, 'Something went wrong!', Colors.red);
+      if (context.mounted) {
+        showSnackBar(context, 'Something went wrong!', Colors.red);
+      }
     }
   }
 
@@ -69,17 +72,20 @@ class AuthRepository {
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8'
           });
-      // ignore: use_build_context_synchronously
-      httpErrorHandle(
-          response: res,
-          context: context,
-          onSuccess: () async {
-            final prefs = await _ref.read(sharedPreferencesProvider);
-            prefs.storeToken(jsonDecode(res.body)['token']);
-            _ref.watch(userProvider).setUser(res.body);
-          });
+      if (context.mounted) {
+        httpErrorHandle(
+            response: res,
+            context: context,
+            onSuccess: () async {
+              final prefs = await _ref.read(sharedPreferencesProvider);
+              prefs.storeToken(jsonDecode(res.body)['token']);
+              _ref.watch(userProvider).setUser(res.body);
+            });
+      }
     } catch (e) {
-      showSnackBar(context, 'Something went wrong!', Colors.red);
+      if (context.mounted) {
+        showSnackBar(context, 'Something went wrong!', Colors.red);
+      }
     }
   }
 
@@ -87,6 +93,7 @@ class AuthRepository {
     try {
       final prefs = await _ref.read(sharedPreferencesProvider);
       String? token = prefs.getToken();
+
       // ignore: unnecessary_null_comparison
       if (token == null) {
         prefs.storeToken('');

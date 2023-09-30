@@ -61,23 +61,26 @@ class AdminRepository {
           'x-auth-token': user.token,
         },
       );
-      // ignore: use_build_context_synchronously
-      httpErrorHandle(
-          response: res,
-          context: context,
-          onSuccess: () {
-            for (int i = 0; i < jsonDecode(res.body).length; i++) {
-              productList
-                  .add(Product.fromJson(jsonEncode(jsonDecode(res.body)[i])));
-            }
-          });
+      if (context.mounted) {
+        httpErrorHandle(
+            response: res,
+            context: context,
+            onSuccess: () {
+              for (int i = 0; i < jsonDecode(res.body).length; i++) {
+                productList
+                    .add(Product.fromJson(jsonEncode(jsonDecode(res.body)[i])));
+              }
+            });
+      }
     } catch (e) {
-      showSnackBar(context, e.toString(), Colors.red);
+      if (context.mounted) {
+        showSnackBar(context, e.toString(), Colors.red);
+      }
     }
     return productList;
   }
 
-  void deleteProduct(
+  Future deleteProduct(
       String id, BuildContext context, VoidCallback onSuccess) async {
     final user = _ref.watch(userProvider).user;
     try {
@@ -89,14 +92,15 @@ class AdminRepository {
         },
       );
 
-      // ignore: use_build_context_synchronously
-      httpErrorHandle(
-          response: res,
-          context: context,
-          onSuccess: () {
-            showSnackBar(context, 'Deleted !', Colors.red);
-            onSuccess;
-          });
+      if (context.mounted) {
+        httpErrorHandle(
+            response: res,
+            context: context,
+            onSuccess: () {
+              showSnackBar(context, 'Deleted !', Colors.red);
+              onSuccess;
+            });
+      }
     } catch (e) {
       showSnackBar(context, e.toString(), Colors.red);
     }

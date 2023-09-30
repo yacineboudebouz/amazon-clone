@@ -1,3 +1,4 @@
+import 'package:amazon_clone/core/constants/utils.dart';
 import 'package:amazon_clone/features/account/view/widgets/single_product.dart';
 import 'package:amazon_clone/features/admin/controller/admin_controller.dart';
 
@@ -35,9 +36,14 @@ class ProductTile extends ConsumerWidget {
               IconButton(
                   onPressed: () {
                     onSuccess;
-                    ref
-                        .watch(adminControllerProvider.notifier)
-                        .deleteProduct(product.id!, context, onSuccess);
+                    if (product.id != null) {
+                      ref
+                          .watch(adminControllerProvider.notifier)
+                          .deleteProduct(product.id!, context, onSuccess);
+                    } else {
+                      showSnackBar(
+                          context, 'Something went wrong ! ', Colors.red);
+                    }
                   },
                   icon: const Icon(Icons.delete_outline))
             ],

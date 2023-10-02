@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:amazon_clone/core/common/widgets/loader.dart';
+
 import 'package:amazon_clone/features/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,15 +24,14 @@ class _CategoryDealsScreenState extends ConsumerState<CategoryDealsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      Future _getAllProducts() async {
+      Future getAllProducts() async {
         return await ref
             .watch(homeControllerProvider.notifier)
             .getProductsCategory(widget.category);
       }
 
-      _productsList = _getAllProducts();
+      _productsList = getAllProducts();
       setState(() {});
     });
     super.initState();

@@ -2,6 +2,7 @@ import 'package:amazon_clone/features/home/view/widgets/adress_box.dart';
 import 'package:amazon_clone/features/home/view/widgets/carousel_image.dart';
 import 'package:amazon_clone/features/home/view/widgets/deal_of_the_day.dart';
 import 'package:amazon_clone/features/home/view/widgets/top_categories.dart';
+import 'package:amazon_clone/features/search/view/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +15,18 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final searchController = TextEditingController();
+  void navigateToSearchScreen(String query) {
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+  }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   searchController.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +48,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       borderRadius: BorderRadius.circular(7),
                       elevation: 1,
                       child: TextFormField(
+                        controller: searchController,
+                        onFieldSubmitted: navigateToSearchScreen,
                         decoration: InputDecoration(
                             prefixIcon: InkWell(
                               onTap: () {},

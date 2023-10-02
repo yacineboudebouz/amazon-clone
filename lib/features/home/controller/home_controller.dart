@@ -23,9 +23,7 @@ class HomeController extends StateNotifier<List<Product>> {
         super([]);
 
   Future<List<Product>> getProductsCategory(String category) async {
-    print(1);
     state = await _homeRepository.fetchCategoryProducts(category);
-    print(2);
     return state;
   }
 }

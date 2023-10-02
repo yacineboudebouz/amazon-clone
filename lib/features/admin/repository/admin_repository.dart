@@ -37,7 +37,6 @@ class AdminRepository {
       // ignore: use_build_context_synchronously
       httpErrorHandle(
           response: response,
-          context: context,
           onSuccess: () {
             showSnackBar(context, 'Product Added successfully !', Colors.green);
             Navigator.pop(context);
@@ -64,7 +63,6 @@ class AdminRepository {
       if (context.mounted) {
         httpErrorHandle(
             response: res,
-            context: context,
             onSuccess: () {
               for (int i = 0; i < jsonDecode(res.body).length; i++) {
                 productList
@@ -95,7 +93,6 @@ class AdminRepository {
       if (context.mounted) {
         httpErrorHandle(
             response: res,
-            context: context,
             onSuccess: () {
               showSnackBar(context, 'Deleted !', Colors.red);
               onSuccess;

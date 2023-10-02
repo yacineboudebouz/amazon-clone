@@ -1,3 +1,3 @@
 class ApiProvider {
-  static const uri = 'http://192.168.246.150:3000';
+  static const uri = 'http://192.168.249.150:3000';
 }

@@ -41,7 +41,6 @@ class AuthRepository {
       if (context.mounted) {
         httpErrorHandle(
           response: res,
-          context: context,
           onSuccess: () {
             showSnackBar(
                 context,
@@ -75,7 +74,6 @@ class AuthRepository {
       if (context.mounted) {
         httpErrorHandle(
             response: res,
-            context: context,
             onSuccess: () async {
               final prefs = await _ref.read(sharedPreferencesProvider);
               prefs.storeToken(jsonDecode(res.body)['token']);

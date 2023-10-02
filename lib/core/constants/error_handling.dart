@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 void httpErrorHandle({
   required http.Response response,
-  required BuildContext context,
   required VoidCallback onSuccess,
 }) {
   switch (response.statusCode) {
@@ -15,13 +14,12 @@ void httpErrorHandle({
       onSuccess();
       break;
     case 400:
-      showSnackBar(context, jsonDecode(response.body)['msg'], Colors.red);
+      print('404 error');
       break;
     case 500:
-      showSnackBar(context, jsonDecode(response.body)['error'], Colors.red);
+      print('500 error');
       break;
     default:
-      showSnackBar(
-          context, '${response.body}  Something went wrong!', Colors.red);
+      print('Somthing went wrong');
   }
 }

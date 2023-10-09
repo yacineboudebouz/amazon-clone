@@ -1,4 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone/core/common/widgets/loader.dart';
+import 'package:amazon_clone/features/search/controller/search_controller.dart';
+import 'package:amazon_clone/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,9 +18,16 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(widget.searchQuery),
-      ),
-    );
+        body: ref.watch(searchProductsProvider(widget.searchQuery)).when(
+            data: (products) => ListView.builder(
+                  itemBuilder: ((context, index) {
+                    return Text(products[index].name);
+                  }),
+                  itemCount: products.length,
+                ),
+            error: (e, tr) => Center(
+                  child: Text(e.toString()),
+                ),
+            loading: () => const Loader()));
   }
 }

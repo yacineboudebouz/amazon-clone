@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/providers/cloudinary_provider.dart';
+import '../../../models/rating.dart';
 
 final adminControllerProvider = ChangeNotifierProvider((ref) {
   return AdminController(
@@ -35,6 +36,7 @@ class AdminController extends ChangeNotifier {
     required String category,
     required List<File> images,
     required BuildContext context,
+    required List<Rating> rating,
   }) async {
     try {
       final cloudinary = _ref.watch(cloudinaryProvider);
@@ -54,6 +56,7 @@ class AdminController extends ChangeNotifier {
         images: imageUrls,
         category: category,
         price: price,
+        rating: rating,
       );
       if (context.mounted) {
         await _adminRepository.sellProduct(context: context, product: product);

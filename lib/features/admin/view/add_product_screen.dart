@@ -60,6 +60,7 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
         quantity: double.parse(quantityController.text),
         category: category,
         images: images,
+        rating: [],
       );
     }
   }
